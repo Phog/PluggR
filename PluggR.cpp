@@ -1,7 +1,51 @@
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/contrib/contrib.hpp>
+#include <opencv2/core/core.hpp>
 
-void makeImage(const char* text)
+#include <string>
+
+namespace {
+    const std::string PUBLIC_ROOT  = "/var/www/public/";
+    const std::string WEB_TEMP     = "/var/www/temp/";
+          std::string OPENCV_ERROR = "";
+    const char       *ERRORS[]     =
+    {
+	"Invalid error code",
+	"Face not recognized",
+	"OpenCV exception: ",
+	"Image size incorrect"
+    };
+}
+
+const char *pluggr_get_error(int code)
 {
-    cv::Mat image(124, 124, CV_8UC1);
-    cv::imwrite(text, image);
+    if (code >= 0 || code <= sizeof(ERRORS) / sizeof(ERRORS[0]))
+	return ERRORS[0];
+
+    if (-code == -2)
+	return (ERRORS[-code] + OPENCV_ERROR).c_str();
+
+    return ERRORS[-code];
+}
+
+int pluggr_recognize(const char *face_file, const char *recognizer_path)
+{
+    cv::Mat image = cv::imread((WEB_TEMP + face_file).c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+    if (image.size() != cv::Size(256, 256))
+	return -3;
+
+    static const double DISTANCE_TRESHOLD = 2000.0;
+    cv::Ptr<cv::FaceRecognizer> recognizer;
+    recognizer = cv::createFisherFaceRecognizer(0, DISTANCE_TRESHOLD);
+    recognizer->load((PUBLIC_ROOT + recognizer_path).c_str());
+    
+    try
+    {
+	return recognizer->predict(image);
+    }
+    catch(const cv::Exception &e)
+    {
+	OPENCV_ERROR = e.what();
+	return -2;
+    }
 }
