@@ -21,7 +21,12 @@ How to build and run:
 	$ export PHP_PLUGIN_FOLDER=[PATH-TO-PHP-PLUGINS]
 	(PHP_PLUGIN_FOLDER is usually /usr/lib/php5/SOME_DATE/)
 
-5) Compile and run the project:
+5) Configure php.ini to load the PluggR plugin
+   Add the line
+       extension=PluggR.so
+   in the Dynamic Extensions section in /etc/php5/apache2/php.ini
+
+6) Compile and run the project:
 	$ cd [PluggR-DIRECTORY]
 	$ make release
 	$ make install_release # needs sudo rights
