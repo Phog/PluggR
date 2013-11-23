@@ -24,6 +24,6 @@ How to build and run:
 5) Compile and run the project:
 	$ cd [PluggR-DIRECTORY]
 	$ make release
-	$ sudo make install
+	$ make install_release # needs sudo rights
 
 Note: This has only been tested on Ubuntu 12.04.3 LTS 64 bit.

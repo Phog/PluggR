@@ -9,8 +9,8 @@
 
 namespace {
     const std::string SERVR_ROOT   = QUOTE(WEB_ROOT);
-    const std::string PUBLIC_ROOT  = WEB_ROOT + "/public/";
-    const std::string WEB_TEMP     = WEB_ROOT + "/temp/";
+    const std::string PUBLIC_ROOT  = SERVR_ROOT + "/public/";
+    const std::string WEB_TEMP     = SERVR_ROOT + "/temp/";
           std::string OPENCV_ERROR = "";
     const char       *ERRORS[]     =
     {

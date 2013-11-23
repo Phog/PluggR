@@ -1,8 +1,8 @@
 CXX := g++
 LDD := g++
 
-FLAGS_RELEASE := -Wall -Wextra -fPIC -O2 -DWEB_ROOT=$WEB_ROOT
-FLAGS_DEBUG   := -Wall -Wextra -fPIC -g -DWEB_ROOT=$WEB_ROOT
+FLAGS_RELEASE := -Wall -Wextra -fPIC -O2 -DWEB_ROOT=$(WEB_ROOT)
+FLAGS_DEBUG   := -Wall -Wextra -fPIC -g -DWEB_ROOT=$(WEB_ROOT)
 INCLUDES      := `php-config --includes`
 LDD_FLAGS     := -shared -lopencv_highgui -lopencv_core -lopencv_contrib
 
@@ -37,9 +37,9 @@ clean:
 	      $(SWIG_CRAP) $(SWIG_OUT) $(SWIG_OBJ)
 
 install_debug: $(TARGET_DEBUG)
-	cp $(TARGET_DEBUG) $PHP_PLUGIN_FOLDER
-	service apache2 restart
+	sudo cp $(TARGET_DEBUG) $(PHP_PLUGIN_FOLDER)
+	sudo service apache2 restart
 
 install_release: $(TARGET_RELEASE)
-	cp $(TARGET_RELEASE) $PHP_PLUGIN_FOLDER
-	service apache2 restart
+	sudo cp $(TARGET_RELEASE) $(PHP_PLUGIN_FOLDER)
+	sudo service apache2 restart
