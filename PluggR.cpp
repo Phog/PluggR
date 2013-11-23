@@ -4,9 +4,13 @@
 
 #include <string>
 
+#define DO_QUOTE(X) #X
+#define QUOTE(X) DO_QUOTE(X)
+
 namespace {
-    const std::string PUBLIC_ROOT  = "/var/www/public/";
-    const std::string WEB_TEMP     = "/var/www/temp/";
+    const std::string SERVR_ROOT   = QUOTE(WEB_ROOT);
+    const std::string PUBLIC_ROOT  = WEB_ROOT + "/public/";
+    const std::string WEB_TEMP     = WEB_ROOT + "/temp/";
           std::string OPENCV_ERROR = "";
     const char       *ERRORS[]     =
     {
